@@ -79,9 +79,9 @@
         let res = sdk.isMethodSupported('getItem')
         console.log('getItem method supported = ' + res)
         sdk.getItem('test', 'key', null).then((data) => {
-          console.log("data received on js side = " + data)
+          console.log("Get Item value = " + data)
         }).catch((err) => {
-          console.log("Error found = " + err)
+          console.log("Error = " + err)
         })
       })
 
@@ -305,12 +305,12 @@
     }
 
     function setCookie() {
-      console.log('Testing set cookie')
+      console.log('Setting test cookie')
       document.cookie = 'test1=test1'
     }
 
     function getCookie() {
-      alert(document.cookie)
+      console.log(document.cookie)
     }
 
     function reserveOrder() {
