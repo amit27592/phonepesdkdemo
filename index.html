@@ -50,7 +50,6 @@
 
   </div>
   <script>
-    sdk = {};
     (function () {
       if (!console) {
         console = {};
@@ -76,7 +75,15 @@
     var exportedFuncs = {
       "initializeSdk": {
         "name": "initializeSdk",
-        "idx": 0
+        "idx": 0,
+        "input": ["android"],
+        "args": ["{android}"],
+        "customImpl": (ev) => {
+          var os = document.getElementById("input-0-android")
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, os.value).then((sdk) => {
+            window.sdk = sdk
+          })
+        }
       },
       "clearLog": {
         "name": "clearLog",
@@ -177,19 +184,36 @@
       "logMerchantEvent": {
         "name": "logMerchantEvent",
         "idx": 16,
-        "args": ["Test", {'key': 'value'}]
+        "args": ["Test", { 'key': 'value' }]
       },
       "replace": {
         "name": "replace",
-        "idx": 17
+        "idx": 17,
+        "customImpl": (ev) => {
+          console.log('Using Replace state');
+
+          if (history.replaceState) {
+            history.replaceState(null, "Page", "test.html");
+            history.go(0);
+          } else {
+            location.replace(url);
+          }
+        }
       },
       "setCookie": {
         "name": "setCookie",
-        "idx": 18
+        "idx": 18,
+        "customImpl": (ev) => {
+          console.log('Setting test cookie')
+          document.cookie = 'test1=test1'
+        }
       },
       "getCookie": {
         "name": "getCookie",
-        "idx": 19
+        "idx": 19,
+        "customImpl": (ev) => {
+          console.log(document.cookie)
+        }
       },
       "reserveOrder": {
         "name": "reserveOrder",
@@ -238,41 +262,47 @@
     }
 
     function addEventListener(exportedFunc) {
-      ip.addEventListener('click', () => {
-        var fn = sdk[exportedFunc.name]
-        var args = exportedFunc.args
-        var newArgs = []
-        if (exportedFunc.args) {
-          exportedFunc.args.forEach((arg) => {
-            if (typeof arg == "string" && arg.startsWith("{")) {
-              var realArgName = arg.substr(1, arg.lastIndexOf("}") - 1)
-              var id = "input-" + exportedFunc.idx + '-' + realArgName
-              var ele = document.getElementById(id)
-              var argValue = ele.value
-              newArgs.push(argValue)
-              return
-            } else
-              newArgs.push(arg)
+      if (exportedFunc.customImpl) {
+        ip.addEventListener('click', exportedFunc.customImpl)
+        return
+      } else {
+        ip.addEventListener('click', () => {
+          var fn = sdk[exportedFunc.name]
+          var args = exportedFunc.args
+          var newArgs = []
+          if (exportedFunc.args) {
+            exportedFunc.args.forEach((arg) => {
+              if (typeof arg == "string" && arg.startsWith("{")) {
+                var realArgName = arg.substr(1, arg.lastIndexOf("}") - 1)
+                var id = "input-" + exportedFunc.idx + '-' + realArgName
+                var ele = document.getElementById(id)
+                var argValue = ele.value
+                newArgs.push(argValue)
+                return
+              } else
+                newArgs.push(arg)
 
-          })
-          var res = fn.apply(this, newArgs)
-          if (res.constructor === Promise) {
-            res.then(() => {
-              if (exportedFunc.success) {
-                console.log([exportedFunc.success, ...args])
-              } else {
-                console.log(args)
-              }
-            }).catch(() => {
-              if (exportedFunc.success) {
-                console.log.apply([exportedFunc.error, ...args])
-              } else {
-                console.log(args)
-              }
             })
+            var res = fn.apply(this, newArgs)
+            if (res.constructor === Promise) {
+              res.then(() => {
+                if (exportedFunc.success) {
+                  console.log([exportedFunc.success, ...args])
+                } else {
+                  console.log(args)
+                }
+              }).catch(() => {
+                if (exportedFunc.success) {
+                  console.log.apply([exportedFunc.error, ...args])
+                } else {
+                  console.log(args)
+                }
+              })
+            }
           }
-        }
-      })
+        })
+      }
+
 
     }
 
