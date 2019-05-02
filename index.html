@@ -107,7 +107,7 @@
         "args": ['test', '{key}', null]
       },
       "removeData": {
-        "name": "removeData",
+        "name": "removeItem",
         "idx": 4,
         "success": "Success: ",
         "error": "Error: ",
@@ -167,17 +167,6 @@
           confirmationState
         ]
       },
-      "navigateToHelpPage": {
-        "name": "navigateToPage",
-        "idx": 12,
-        // "args": [new PhonePe.HelpPageNavigationRequest("dshbcjd")]
-      },
-      "getUserDetails": {
-        "name": "getUserDetails",
-        "idx": 13,
-        "args": [[PhonePe.Constants.UserDetail.email, PhonePe.Constants.UserDetail.phoneNumber,
-        PhonePe.Constants.UserDetail.isEmailVerified, PhonePe.Constants.UserDetail.name]]
-      },
       "seekPermission": {
         "name": "seekPermission",
         "idx": 14,
@@ -195,20 +184,6 @@
         "success": "Successfully Logged",
         "error": "Error in logging",
         "args": ["Test", { 'key': 'value' }]
-      },
-      "replace": {
-        "name": "replace",
-        "idx": 17,
-        "customImpl": (ev) => {
-          console.log('Using Replace state');
-
-          if (history.replaceState) {
-            history.replaceState(null, "Page", "test.html");
-            history.go(0);
-          } else {
-            location.replace(url);
-          }
-        }
       },
       "setCookie": {
         "name": "setCookie",
@@ -243,6 +218,16 @@
         "idx": 21,
         "type": "promise",
         "args": ["image", true]
+      },
+      "scanQRCode": {
+        "name": "scanQRCode",
+        "idx": 22,
+        "args": [true]
+      },
+      "scanQRCodeWithoutGallery": {
+        "name": "scanQRCode",
+        "idx": 23,
+        "args": [false]
       }
     }
 
