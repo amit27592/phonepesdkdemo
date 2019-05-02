@@ -213,9 +213,11 @@
       "setCookie": {
         "name": "setCookie",
         "idx": 18,
+        "input": ["cookie"],
+        "args": ["{cookie}"],
         "customImpl": (ev) => {
           console.log('Setting test cookie')
-          document.cookie = 'test1=test1'
+          document.cookie = ev
         }
       },
       "getCookie": {
@@ -272,12 +274,15 @@
     }
 
     function addEventListener(exportedFunc) {
-      if (exportedFunc.customImpl) {
+      if (false) {
         ip.addEventListener('click', exportedFunc.customImpl)
         return
       } else {
         ip.addEventListener('click', () => {
           var fn = sdk[exportedFunc.name]
+          if(exportedFunc.customImpl) {
+            fn = exportedFunc.customImpl
+          }
           var args = exportedFunc.args
           var newArgs = []
           if (!exportedFunc.args)
@@ -296,6 +301,7 @@
 
             })
             var res = fn.apply(sdk, newArgs)
+            
             if (res.constructor === Promise) {
               res.then((result) => {
                 if (exportedFunc.success) {
