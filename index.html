@@ -287,7 +287,7 @@
             })
             var res = fn.apply(sdk, newArgs)
             
-            if (res.constructor === Promise) {
+            if (res && res.constructor === Promise) {
               res.then((result) => {
                 if (exportedFunc.success) {
                   if (typeof result == "object")
