@@ -192,6 +192,8 @@
       "logMerchantEvent": {
         "name": "logMerchantEvent",
         "idx": 16,
+        "success": "Successfully Logged",
+        "error": "Error in logging",
         "args": ["Test", { 'key': 'value' }]
       },
       "replace": {
@@ -278,6 +280,8 @@
           var fn = sdk[exportedFunc.name]
           var args = exportedFunc.args
           var newArgs = []
+          if (!exportedFunc.args)
+            exportedFunc.args = []
           if (exportedFunc.args) {
             exportedFunc.args.forEach((arg) => {
               if (typeof arg == "string" && arg.startsWith("{")) {
