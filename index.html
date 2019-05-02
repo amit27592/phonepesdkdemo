@@ -283,7 +283,7 @@
                 newArgs.push(arg)
 
             })
-            var res = fn.apply(this, newArgs)
+            var res = fn.apply(sdk, newArgs)
             if (res.constructor === Promise) {
               res.then(() => {
                 if (exportedFunc.success) {
