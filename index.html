@@ -285,17 +285,21 @@
             })
             var res = fn.apply(sdk, newArgs)
             if (res.constructor === Promise) {
-              res.then(() => {
+              res.then((result) => {
                 if (exportedFunc.success) {
-                  console.log([exportedFunc.success, ...args])
+                  if(typeof result == "object")
+                    result = JSON.stringify(result)
+                  console.log(exportedFunc.success + result)
                 } else {
-                  console.log(args)
+                  console.log(result)
                 }
-              }).catch(() => {
-                if (exportedFunc.success) {
-                  console.log.apply([exportedFunc.error, ...args])
+              }).catch((err) => {
+                if (exportedFunc.error) {
+                  if(typeof err == "object")
+                    err = JSON.stringify(err)
+                  console.log.apply(exportedFunc.error + err)
                 } else {
-                  console.log(args)
+                  console.log(err)
                 }
               })
             }
