@@ -116,25 +116,47 @@
       },
       "startUpdatingLocation": {
         "name": "startUpdatingLocation",
-        "idx": 5
+        "idx": 5,
+        "customImpl": () => {
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+            let res = sdk.isMethodSupported('startUpdatingLocation')
+            console.log('startUpdatingLocation method supported = ' + res)
+            sdk.startUpdatingLocation()
+          })
+        }
       },
       "stopUpdatingLocation": {
         "name": "stopUpdatingLocation",
-        "idx": 6
+        "idx": 6,
+        "customImpl": () => {
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+            let res = sdk.isMethodSupported('stopUpdatingLocation')
+            console.log('stopUpdatingLocation method supported = ' + res)
+            sdk.stopUpdatingLocation()
+          })
+        }
       },
       "registerLocationUpdateSuccessCallback": {
         "name": "registerLocationUpdateSuccessCallback",
         "idx": 7,
-        "args": ["callbackName", (resp) => {
-          console.log('Location success response = ' + JSON.stringify(response))
-        }]
+        "customImpl": () => {
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+            sdk.registerLocationUpdateSuccessCallback('callbackName', (response) => {
+              console.log('Location success response = ' + JSON.stringify(response))
+            })
+          })
+        }
       },
       "registerLocationUpdateFailureCallback": {
         "name": "registerLocationUpdateFailureCallback",
         "idx": 8,
-        "args": ["callbackName", (resp) => {
-          console.log('Location success response = ' + JSON.stringify(response))
-        }]
+        "customImpl": () => {
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+            sdk.registerLocationUpdateFailureCallback('callbackName', (response) => {
+              console.log('Location success response = ' + JSON.stringify(response))
+            })
+          })
+        }
       },
       "getCurrentLocation": {
         "name": "getCurrentLocation",
