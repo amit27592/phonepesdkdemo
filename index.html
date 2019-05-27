@@ -118,7 +118,8 @@
         "name": "startUpdatingLocation",
         "idx": 5,
         "customImpl": () => {
-          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+          var os = document.getElementById("input-0-android")
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, os.value).then((sdk) => {
             let res = sdk.isMethodSupported('startUpdatingLocation')
             console.log('startUpdatingLocation method supported = ' + res)
             sdk.startUpdatingLocation()
@@ -129,7 +130,8 @@
         "name": "stopUpdatingLocation",
         "idx": 6,
         "customImpl": () => {
-          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+          var os = document.getElementById("input-0-android")
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, os.value).then((sdk) => {
             let res = sdk.isMethodSupported('stopUpdatingLocation')
             console.log('stopUpdatingLocation method supported = ' + res)
             sdk.stopUpdatingLocation()
@@ -140,7 +142,8 @@
         "name": "registerLocationUpdateSuccessCallback",
         "idx": 7,
         "customImpl": () => {
-          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, this.currentOS()).then((sdk) => {
+          var os = document.getElementById("input-0-android")
+          PhonePe.PhonePe.build(PhonePe.Constants.Species.web, os.value.then((sdk) => {
             sdk.registerLocationUpdateSuccessCallback('callbackName', (response) => {
               console.log('Location success response = ' + JSON.stringify(response))
             })
