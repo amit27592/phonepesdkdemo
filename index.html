@@ -254,6 +254,24 @@
         "name": "scanQRCode",
         "idx": 23,
         "args": [false]
+      },
+      "proceedToPay": {
+        "name": "proceedToPay",
+        "idx": 24,
+        "input": ["reservationId"],
+        "args": ["{reservationId}"]
+      },
+      "fetchAuthToken" : {
+        "name": "fetchAuthToken",
+        "idx": 25
+        "success": "Token received from server",
+        "error": "Error found when fetching token :"
+      },
+      "createServiceRequestToken" : {
+        "name": "createServiceRequestToken",
+        "idx": 26
+        "success": "Service request created",
+        "error": "Error found while creating service request :"
       }
     }
 
